@@ -14,7 +14,7 @@ namespace sun {
 #endif
 		_name = "logger";
 		_filePath = "../log/run.log";
-		_target = RotateFile;
+		_target = Console;
 		_level = Trace;
 		_rotateFileSize = 1024 * 1024 * 100;
 		_rotateFileCount = 3;
@@ -43,12 +43,6 @@ namespace sun {
 					break;
 				}
 				case RotateFile: {
-#if 0
-					if (0 != createFilePath(_filePath)) {
-						_error = "create log file directory failed";
-						return 1;
-					}
-#endif
 					auto rotateFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(_filePath, _rotateFileSize, _rotateFileCount);
 					rotateFileSink->set_pattern("%^[%Y-%m-%d %H:%M:%S:%l:%s(%#)] %v%$");
 					_logger = std::make_shared<spdlog::logger>(_name, rotateFileSink);
